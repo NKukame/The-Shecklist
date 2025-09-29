@@ -1,95 +1,120 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client"
 
-export default function Home() {
+import { useState } from 'react'
+import { useDarkMode } from '../../context/DarkModeContext';
+import LatestReviewCard from './components/CardComp/LatestReviewCardComp/LatestReviewCard';
+import Header from './components/HeaderComp/Header';
+import './App.css';
+
+function Home() {
+  const [count, setCount] = useState(0);
+  const { darkMode } = useDarkMode();
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+    <div className="main-container">
+      <Header/>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+      <div className={`content ${darkMode ? "dark-mode" : "light-mode"}`}>
+        <div className="intro-section">
+          <h1>
+            Welcome to The Shecklist
+          </h1>
+          <p className="intro-text">
+            Your ultimate soundtrack scout. <br /> We break down albums with sharp reviews and 
+            bold ratings. <br />Whether you're digging for hidden gems or 
+            checking if the hype is real, we hit play on the truth behind the music.
+          </p>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="latest-reviews">
+          <h2>LATEST REVIEWS</h2>
+          <div className="latest-reviews-list">
+
+            <div className="review-item">
+              <LatestReviewCard/>
+            </div>
+            <div className="review-item">
+              <LatestReviewCard/>
+            </div>
+            <div className="review-item">
+              <LatestReviewCard/>
+            </div>
+            <div className="review-item">
+              <LatestReviewCard/>
+            </div>
+
+          </div>
+        </div>
+
+        <div className="highest-rated-container">
+          <div className="highest-rated-album-container">
+            <h3>HIGHEST RATED ALBUM</h3>
+            <div className='highest-rated-album'>
+
+              <div className="highest-rated-album-entry">
+                <img src="https://media.pitchfork.com/photos/5929b09c5e6ef95969321fcb/master/pass/3a0607ec.jpg" alt="" className="highest-rated-album-thumbnail" />
+                <div className="highest-rated-album-text">
+                  <h4 className="highest-rated-album-title">GO:OD AM</h4>
+                  <p className="highest-rated-album-artist">Mac Miler</p>
+                </div>
+                <div className="highest-rated-album-genre-container">
+                  <p className="highest-rated-album-genre">Hip-Hop</p>
+                </div>
+              </div>
+              <div className="highest-rated-album-entry">
+                <img src="https://media.pitchfork.com/photos/5929b09c5e6ef95969321fcb/master/pass/3a0607ec.jpg" alt="" className="highest-rated-album-thumbnail" />
+                <div className="highest-rated-album-text">
+                  <h4 className="highest-rated-album-title">GO:OD AM</h4>
+                  <p className="highest-rated-album-artist">Mac Miler</p>
+                </div>
+                <div className="highest-rated-album-genre-container">
+                  <p className="highest-rated-album-genre">Hip-Hop</p>
+                </div>
+              </div>
+              <div className="highest-rated-album-entry">
+                <img src="https://media.pitchfork.com/photos/5929b09c5e6ef95969321fcb/master/pass/3a0607ec.jpg" alt="" className="highest-rated-album-thumbnail" />
+                <div className="highest-rated-album-text">
+                  <h4 className="highest-rated-album-title">GO:OD AM</h4>
+                  <p className="highest-rated-album-artist">Mac Miler</p>
+                </div>
+                <div className="highest-rated-album-genre-container">
+                  <p className="highest-rated-album-genre">Hip-Hop</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div className="featured-artists-container">
+            <h3>FEATURED ARTISTS</h3>
+            <div className='featured-artists'>
+
+              <div className="featured-artists-entry">
+                <img src="https://media.pitchfork.com/photos/5929b09c5e6ef95969321fcb/master/pass/3a0607ec.jpg" alt="" className="featured-artists-thumbnail" /> 
+                <h4 className="featured-artists-name">Mac Miler</h4>
+                <p className="featured-artists-genre">Hip-Hop</p>               
+              </div>
+              <div className="featured-artists-entry">
+                <img src="https://media.pitchfork.com/photos/5929b09c5e6ef95969321fcb/master/pass/3a0607ec.jpg" alt="" className="featured-artists-thumbnail" /> 
+                <h4 className="featured-artists-name">Mac Miler</h4>
+                <p className="featured-artists-genre">Hip-Hop</p>               
+              </div>
+              <div className="featured-artists-entry">
+                <img src="https://media.pitchfork.com/photos/5929b09c5e6ef95969321fcb/master/pass/3a0607ec.jpg" alt="" className="featured-artists-thumbnail" /> 
+                <h4 className="featured-artists-name">Mac Miler</h4>
+                <p className="featured-artists-genre">Hip-Hop</p>               
+              </div>
+
+            </div>
+              
+          </div>
+        </div>
+      </div>
+
     </div>
-  );
+    </>
+  )
 }
+
+export default Home;
