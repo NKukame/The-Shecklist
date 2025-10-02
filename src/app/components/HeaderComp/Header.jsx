@@ -38,7 +38,7 @@ function Header() {
         </div>
 
         <div className="icon-container">
-          <Link href="/reviews" className="header-link">
+          <Link href="/review-page" className="header-link">
             <BoomBox size={20} />
           </Link>
           <span className="icon-label">Reviews</span>
