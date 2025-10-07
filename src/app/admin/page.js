@@ -3,7 +3,10 @@
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation';
 import Header from "../components/HeaderComp/Header";
-import NewAlbumsForm from "../components/FormComp/NewAlbumsForm";
+import NewAlbumsForm from "../components/FormComp/NewAlbumsComps/NewAlbumsForm";
+import AlbumPreview from "../components/FormComp/NewAlbumsComps/AlbumPreview";
+import ArtistComp from "../components/FormComp/ArtistComps/ArtistComp";
+import ArtistPreview from "../components/FormComp/ArtistComps/ArtistPreview"; 
 import "./Admin.css";
 
 function Admin() {
@@ -21,6 +24,12 @@ function Admin() {
     author: "",
     albumReleaseDate: "",
   });
+  const [artistForm, setArtistForm] = useState({
+    artistName: "",
+    artistThumbnail: "",
+    descrition: "",
+    genres: "",
+  });
 
   const renderForm = () => {
     switch (activeSection) {
@@ -32,6 +41,8 @@ function Admin() {
             <p>Single form placeholder (Coming soon)</p>
           </div>
         );
+      case "Artist":
+        return <ArtistComp formData={artistForm} setFormData={setArtistForm}/>;
       case "Genre":
         return (
           <div>
@@ -46,47 +57,15 @@ function Admin() {
   const renderPreview = () => {
     switch (activeSection) {
       case "New Review":
-        return (
-          <div className="album-preview">
-            {albumForm.albumThumbnail ? (
-              <img src={albumForm.albumThumbnail} alt="Album Thumbnail" />
-            ) : null}
-
-            <p>
-              <strong>Album Name:</strong> {albumForm.albumName}
-            </p>
-            <p>
-              <strong>Artist Name:</strong> {albumForm.artistName}
-            </p>
-            <p>
-              <strong>Artist Label:</strong> {albumForm.artistLabel}
-            </p>
-            <p>
-              <strong>Album Review:</strong> {albumForm.albumReview}
-            </p>
-            <p>
-              <strong>Genres:</strong> {albumForm.genres}
-            </p>
-            <p>
-              <strong>Score:</strong> {albumForm.score}
-            </p>
-            <p>
-              <strong>Review Snippet:</strong> {albumForm.reviewSnippet}
-            </p>
-            <p>
-              <strong>Author:</strong> {albumForm.author}
-            </p>
-            <p>
-              <strong>Album Release Date:</strong> {albumForm.albumReleaseDate}
-            </p>
-          </div>
-        );
+        return <AlbumPreview albumForm={albumForm} activeSection={activeSection} />
       case "Single":
         return (
           <div>
             <p>Still In Construction</p>
           </div>
         );
+      case "Artist":
+        return <ArtistPreview artistForm={artistForm} activeSection={activeSection} />
       case "Genre":
         return (
           <div>
@@ -106,7 +85,7 @@ function Admin() {
           <aside className="admin-dashboard-sidebar">
             <h5>Admin Dashboard</h5>
             <div className="admin-sidebar-items-container">
-              {["New Review", "Single", "Genre", "Logout"].map((item) => (
+              {["New Review", "Single", "Artist", "Genre", "Logout"].map((item) => (
                 <div
                   key={item}
                   className={`admin-sidebar-item ${

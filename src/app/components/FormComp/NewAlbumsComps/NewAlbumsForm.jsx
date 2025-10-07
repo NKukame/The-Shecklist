@@ -1,4 +1,4 @@
-import "./Forms.css";
+import "../Forms.css";
 
 function NewAlbumsForm({ formData, setFormData }) {
   const handleChange = (e) => {
