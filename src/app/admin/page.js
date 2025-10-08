@@ -7,7 +7,10 @@ import NewAlbumsForm from "../components/FormComp/NewAlbumsComps/NewAlbumsForm";
 import AlbumPreview from "../components/FormComp/NewAlbumsComps/AlbumPreview";
 import ArtistComp from "../components/FormComp/ArtistComps/ArtistComp";
 import ArtistPreview from "../components/FormComp/ArtistComps/ArtistPreview"; 
+import SinglesForm from "../components/FormComp/SingleComp/SinglesForm";
+import SinglesPreview from "../components/FormComp/SingleComp/SinglesPreview";
 import "./Admin.css";
+import "../App.css";
 
 function Admin() {
   const [activeSection, setActiveSection] = useState("New Review");
@@ -30,25 +33,27 @@ function Admin() {
     descrition: "",
     genres: "",
   });
+  const[singleForm, setSingleForm] = useState({
+    singleName: "",
+    artistName: "",
+    singleThumbnail: "",
+    artistLabel: "",
+    singleReview: "",
+    genres: "",
+    score: "",
+    reviewSnippet: "",
+    author: "",
+    singleReleaseDate: "",
+  });
 
   const renderForm = () => {
     switch (activeSection) {
       case "New Review":
         return <NewAlbumsForm formData={albumForm} setFormData={setAlbumForm}/>;
       case "Single":
-        return (
-          <div>
-            <p>Single form placeholder (Coming soon)</p>
-          </div>
-        );
+        return <SinglesForm formData={singleForm} setFormData={setSingleForm}/>;
       case "Artist":
         return <ArtistComp formData={artistForm} setFormData={setArtistForm}/>;
-      case "Genre":
-        return (
-          <div>
-            <p>Genre form placeholder (Coming soon)</p>
-          </div>
-        );
       default:
         return null;
     }
@@ -57,21 +62,11 @@ function Admin() {
   const renderPreview = () => {
     switch (activeSection) {
       case "New Review":
-        return <AlbumPreview albumForm={albumForm} activeSection={activeSection} />
+        return <AlbumPreview albumForm={albumForm} activeSection={activeSection} />;
       case "Single":
-        return (
-          <div>
-            <p>Still In Construction</p>
-          </div>
-        );
+        return <SinglesPreview singleForm={singleForm} activeSection={activeSection} />;
       case "Artist":
-        return <ArtistPreview artistForm={artistForm} activeSection={activeSection} />
-      case "Genre":
-        return (
-          <div>
-            <p>Still In Construction</p>
-          </div>
-        );
+        return <ArtistPreview artistForm={artistForm} activeSection={activeSection} />;
       default:
         return null;
     }
@@ -85,7 +80,7 @@ function Admin() {
           <aside className="admin-dashboard-sidebar">
             <h5>Admin Dashboard</h5>
             <div className="admin-sidebar-items-container">
-              {["New Review", "Single", "Artist", "Genre", "Logout"].map((item) => (
+              {["New Review", "Single", "Artist", "Logout"].map((item) => (
                 <div
                   key={item}
                   className={`admin-sidebar-item ${
