@@ -60,6 +60,20 @@
   font-size: 0.99rem;
 }
 
+.reviews-page-top-section-text-content a{
+  text-decoration: underline;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.reviews-page-top-section-text-content a:hover{
+  color: var(--color-accent);
+}
+
+.dark-mode .reviews-page-top-section-text-content a:hover{
+  color: var(--accent);
+}
+
 .reviews-page-review-section {
   display: flex;
   flex-direction: column;

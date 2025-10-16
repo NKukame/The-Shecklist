@@ -3,7 +3,8 @@
 .review-container,
 .reviews-page-container,
 .admin-container,
-.search-container {
+.search-container,
+.artist-page-container {
   height: 100%;
   border-radius: 15px;
   background: rgba(255, 255, 255, 0.15);
@@ -19,7 +20,8 @@
 .dark-mode .review-container,
 .dark-mode .reviews-page-container,
 .dark-mode .admin-container,
-.dark-mode .search-container {
+.dark-mode .search-container,
+.dark-mode .artist-page-container {
   height: 100%;
   background: rgba(10, 12, 20, 0.4); /* deeper, bluer tint */
   backdrop-filter: blur(30px);

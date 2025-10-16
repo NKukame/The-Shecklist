@@ -1,10 +1,11 @@
 import Header from '../components/HeaderComp/Header';
+import Link from 'next/link';
 import './Reviews.css';
 
 function Reviews(){
     return (
       <>
-        <div className="reviews-page-container">
+        <section className="reviews-page-container">
           <Header />
 
           <div className="reviews-page-body">
@@ -18,7 +19,9 @@ function Reviews(){
               </div>
               <div className="reviews-page-top-section-text-content">
                 <h1 className="reviews-page-album-title">Alfredo</h1>
-                <p className="reviews-page-artist-name">Freddie Gibbs</p>
+                <Link href="/artist-page">               
+                  <p className="reviews-page-artist-name">Freddie Gibbs</p>
+                </Link>
                 <p className="reviews-page-artist-label">ESGN/ALC/Empire</p>
                 <p className="reviews-page-release-date">
                   Released: May 29, 2020
@@ -55,7 +58,7 @@ function Reviews(){
               </p>
             </div>
           </div>
-        </div>
+        </section>
       </>
     );
 }
