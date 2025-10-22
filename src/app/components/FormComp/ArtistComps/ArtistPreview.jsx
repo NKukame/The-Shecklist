@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 function AlbumPreview({ artistForm, activeSection }) {
   if (activeSection !== "Artist") return null;
@@ -6,13 +7,10 @@ function AlbumPreview({ artistForm, activeSection }) {
   return (
     <div className="album-preview">
       {artistForm.artistThumbnail ? (
-        <img src={artistForm.artistThumbnail} alt="Artist Thumbnail" />
+        <Image src={artistForm.artistThumbnail} alt="Artist Thumbnail" width={250} height={250}/>
       ) : null}
       <p>
         <strong>Artist Name:</strong> {artistForm.artistName}
-      </p>
-      <p>
-        <strong>Genres:</strong> {artistForm.genres}
       </p>
       <p>
         <strong>Artist Description:</strong> {artistForm.descrition}

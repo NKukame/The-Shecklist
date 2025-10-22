@@ -1,6 +1,7 @@
 import "../Forms.css";
 
 function ArtistComp({ formData, setFormData }) {
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -8,6 +9,21 @@ function ArtistComp({ formData, setFormData }) {
       [name]: value,
     }));
   };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({
+          ...prev,
+          artistThumbnail: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <>
       <form action="" className="new-album-form">
@@ -36,19 +52,10 @@ function ArtistComp({ formData, setFormData }) {
           <div className="form-group">
             <label htmlFor="">Artist Picture</label>
             <input
-              type="text"
+              type="file"
               name="artistThumbnail"
-              value={formData.artistThumbnail}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="">Genres</label>
-            <input
-              type="text"
-              name="genres"
-              value={formData.genres}
-              onChange={handleChange}
+              accept="image/*"
+              onChange={handleFileChange}
             />
           </div>
         </div>

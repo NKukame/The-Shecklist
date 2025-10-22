@@ -72,6 +72,33 @@ function Admin() {
     }
   };
 
+  const handleSubmit = async () => {
+    if (activeSection === "Artist") {
+      try {
+        const response = await fetch('/api/upload-artist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: artistForm.artistName,
+            description: artistForm.descrition,
+            thumbnail: artistForm.artistThumbnail
+          })
+        });
+        
+        const result = await response.json();
+        if (response.ok) {
+          alert('Artist created successfully!');
+        } else {
+          alert(result.message || 'Error creating artist');
+        }
+      } catch (error) {
+        alert('Error submitting form');
+      }
+    }
+  };
+
   return (
     <div className="admin-container">
       <Header />
@@ -103,7 +130,7 @@ function Admin() {
             <main>
               <h3>{activeSection}</h3>
               {renderForm()}
-              <button type="submit">Submit</button>
+              <button type="button" onClick={handleSubmit}>Submit</button>
             </main>
           </div>
 

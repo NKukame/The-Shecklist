@@ -23,26 +23,40 @@ model User {
   createdAt DateTime  @default(now())
 }
 
-model Artist{
-  id        String    @id @default(uuid())
-  name      String
-  thumbnail String
-  desrciption String
-  genres      ArtistGenre[]
+model Artist {
+  id          String   @id @default(uuid())
+  name        String
+  thumbnail   String
+  description String
+  albums      Album[]
 }
 
-model Genre{
-  id        String    @id @default(uuid())
-  name      String    @unique
-  artists   ArtistGenre[]
+model Album {
+  id          String   @id @default(uuid())
+  title       String
+  albumThumbnail       String
+  releaseDate DateTime
+  artistLabel       String
+  author       String
+  reviewSnippet       String
+  score       String
+  artistId    String
+  artist      Artist   @relation(fields: [artistId], references: [id])
+  genres      AlbumGenre[]
 }
 
-model ArtistGenre {
-  artistId String
-  genreId  String
+model Genre {
+  id      String       @id @default(uuid())
+  name    String       @unique
+  albums  AlbumGenre[]
+}
 
-  artist Artist @relation(fields: [artistId], references: [id])
-  genre  Genre  @relation(fields: [genreId], references: [id])
+model AlbumGenre {
+  albumId String
+  genreId String
 
-  @@id([artistId, genreId]) 
+  album Album @relation(fields: [albumId], references: [id])
+  genre Genre @relation(fields: [genreId], references: [id])
+
+  @@id([albumId, genreId])
 }
