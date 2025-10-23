@@ -35,6 +35,7 @@ model Album {
   id          String   @id @default(uuid())
   title       String
   albumThumbnail       String
+  albumReview       String
   releaseDate DateTime
   artistLabel       String
   author       String

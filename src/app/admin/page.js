@@ -10,10 +10,14 @@ import ArtistPreview from "../components/FormComp/ArtistComps/ArtistPreview";
 import SinglesForm from "../components/FormComp/SingleComp/SinglesForm";
 import SinglesPreview from "../components/FormComp/SingleComp/SinglesPreview";
 import "./Admin.css";
-import "../App.css";
+import "../login/Login.css";
+import "../App.css"
 
 function Admin() {
   const [activeSection, setActiveSection] = useState("New Review");
+  const [isLoading, setIsLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const router = useRouter();
   const [albumForm, setAlbumForm] = useState({
     albumName: "",
@@ -21,7 +25,7 @@ function Admin() {
     albumThumbnail: "",
     artistLabel: "",
     albumReview: "",
-    genres: "",
+    genres: [],
     score: "",
     reviewSnippet: "",
     author: "",
@@ -31,7 +35,6 @@ function Admin() {
     artistName: "",
     artistThumbnail: "",
     descrition: "",
-    genres: "",
   });
   const[singleForm, setSingleForm] = useState({
     singleName: "",
@@ -73,35 +76,103 @@ function Admin() {
   };
 
   const handleSubmit = async () => {
-    if (activeSection === "Artist") {
-      try {
-        const response = await fetch('/api/upload-artist', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: artistForm.artistName,
-            description: artistForm.descrition,
-            thumbnail: artistForm.artistThumbnail
-          })
-        });
-        
-        const result = await response.json();
-        if (response.ok) {
-          alert('Artist created successfully!');
-        } else {
-          alert(result.message || 'Error creating artist');
+    setIsLoading(true);
+    try {
+      switch (activeSection) {
+        case "Artist": {
+          const response = await fetch("/api/upload-artist", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: artistForm.artistName,
+              description: artistForm.descrition,
+              thumbnail: artistForm.artistThumbnail,
+            }),
+          });
+          const result = await response.json();
+          if (response.ok) {
+            setAlertMessage("Artist created successfully!");
+          } else {
+            setAlertMessage(result.message || "Error creating artist");
+          }
+          setShowAlert(true);
+          break;
         }
-      } catch (error) {
-        alert('Error submitting form');
+        case "New Review": {
+          const response = await fetch("/api/upload-album", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: albumForm.albumName,
+              artistName: albumForm.artistName,
+              albumThumbnail: albumForm.albumThumbnail,
+              artistLabel: albumForm.artistLabel,
+              albumReview: albumForm.albumReview,
+              genres: albumForm.genres,
+              score: albumForm.score,
+              reviewSnippet: albumForm.reviewSnippet,
+              author: albumForm.author,
+              albumReleaseDate: albumForm.albumReleaseDate,
+            }),
+          });
+          const result = await response.json();
+          if (response.ok) {
+            setAlertMessage("Album created successfully!");
+          } else {
+            setAlertMessage(result.message || "Error creating album");
+          }
+          setShowAlert(true);
+          break;
+        }
+        case "Single": {
+          break;
+        }
+        default:
+          break;
       }
+    } catch (error) {
+      setAlertMessage("Error submitting form");
+      setShowAlert(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="admin-container">
       <Header />
+      
+      {showAlert && (
+        <div className="alert-container">
+          <div className="alert-box">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              className="alert-icon"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 
+             0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>{alertMessage}</span>
+            <button
+              onClick={() => setShowAlert(false)}
+              className="alert-close"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
       <div className="admin-body">
         <section className="admin-dashboard">
           <aside className="admin-dashboard-sidebar">
@@ -130,7 +201,11 @@ function Admin() {
             <main>
               <h3>{activeSection}</h3>
               {renderForm()}
-              <button type="button" onClick={handleSubmit}>Submit</button>
+              {isLoading ? (
+                <div className="loader"></div>
+              ) : (
+                <button type="button" onClick={handleSubmit}>Submit</button>
+              )}
             </main>
           </div>
 

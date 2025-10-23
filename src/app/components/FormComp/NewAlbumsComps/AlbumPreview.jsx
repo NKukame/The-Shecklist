@@ -21,7 +21,10 @@ function AlbumPreview({ albumForm, activeSection }) {
         <strong>Album Review:</strong> {albumForm.albumReview}
       </p>
       <p>
-        <strong>Genres:</strong> {albumForm.genres}
+        <strong>Genres:</strong>{" "}
+        {Array.isArray(albumForm.genres) && albumForm.genres.length > 0
+          ? albumForm.genres.join(", ")
+          : "No genres selected"}
       </p>
       <p>
         <strong>Score:</strong> {albumForm.score}

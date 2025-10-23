@@ -16,16 +16,16 @@ export async function POST(req) {
     }
 
     // Check if artist already exists
-    // const existingArtist = await prisma.artist.findUnique({
-    //   where: { name },
-    // });
+    const existingArtist = await prisma.artist.findFirst({
+      where: { name },
+    });
 
-    // if (existingArtist) {
-    //   return NextResponse.json(
-    //     { message: "Artist already exists" },
-    //     { status: 409 }
-    //   );
-    // }
+    if (existingArtist) {
+      return NextResponse.json(
+        { message: "Artist already exists" },
+        { status: 409 }
+      );
+    }
 
     let thumbnailUrl = null;
 
