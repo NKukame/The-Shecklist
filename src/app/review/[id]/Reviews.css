@@ -94,6 +94,10 @@
     color: var(--near-white);
 }
 
+.reviews-page-top-section-score-container{
+  text-align: center;
+}
+
 
 @media (max-width: 1100px) {
   .reviews-page-top-section {

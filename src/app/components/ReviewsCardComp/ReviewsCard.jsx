@@ -1,24 +1,29 @@
+import Image from "next/image";
 import "./ReviewsCard.css";
 
-function ReviewsCard({ onClick }) {
+function ReviewsCard({ album, onClick }) {
   return (
     <>
       <div className="reviews-card" onClick={onClick}>
-        <img
-          src="https://media.pitchfork.com/photos/5ed56eb59bcc962f72cc0b57/1:1/w_800,h_800,c_limit/Alfredo_Freddie%20Gibbs%20and%20The%20Alchemist.jpg"
-          alt="Album Cover Image"
+        <Image
+          src={album.albumThumbnail}
+          alt={`${album.title} Cover`}
           className="cover-img"
+          width={250}
+          height={250}
         />
         <div className="reviews-card-text-content">
-          <h3>Freddie Gibbs</h3>
-          <p className="reviews-card-album-title">Alfredo</p>
-          <p className="reviews-card-review-snippet">
-            Audacious runways and expansive production.
-          </p>
+          <h3>{album.artist.name}</h3>
+          <p className="reviews-card-album-title">{album.title}</p>
+          <p className="reviews-card-review-snippet">{album.reviewSnippet}</p>
         </div>
         <div className="genre-tags">
-          <span className="genre-tag">Hip-Hop</span>
-          <span className="genre-tag">R&B</span>
+          {album.genres.length > 0 && (
+            <span className="genre-tag">{album.genres[0].genre.name}</span>
+          )}
+          {album.genres.length > 1 && (
+            <span className="genre-tag">+{album.genres.length - 1}</span>
+          )}
         </div>
       </div>
     </>
