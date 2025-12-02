@@ -149,3 +149,34 @@
     font-size: 0.85rem;
   }
 }
+
+@media (max-width: 480px){
+  .reviews-card {
+    width: 150px;
+    height: 290px;
+    padding: 12px;
+  }
+
+  .cover-img {
+    height: 100px;
+  }
+
+  .reviews-card h3 {
+    font-size: 1rem;
+  }
+
+
+  .reviews-card-album-title {
+    font-size: 0.8rem;
+  }
+
+  .reviews-card-review-snippet {
+    font-size: 0.75rem;
+  }
+
+  .dark-mode .genre-tag {
+    padding: 3px 10px;
+    font-size: 0.5rem;
+  }
+
+}

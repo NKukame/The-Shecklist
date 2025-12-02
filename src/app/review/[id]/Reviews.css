@@ -171,4 +171,15 @@
   .reviews-page-top-section-score-container h2 {
     font-size: 1.2rem;
   }
+
+  .reviews-page-genre-tags{
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 6px;
+}
+
 }

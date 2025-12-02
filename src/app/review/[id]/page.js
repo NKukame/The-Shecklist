@@ -1,42 +1,47 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
 import Header from "../../components/HeaderComp/Header";
 import Link from "next/link";
 import "./Reviews.css";
 
-function Reviews() {
-  const [album, setAlbum] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const params = useParams();
+async function fetchAlbum(id) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/fetch-album/${id}`, {
+    cache: 'no-store'
+  });
+  if (!response.ok) return null;
+  const data = await response.json();
+  return data.album;
+}
 
-  useEffect(() => {
-    const fetchAlbum = async () => {
-      try {
-        const response = await fetch(`/api/fetch-album/${params.id}`);
-        const data = await response.json();
-        if (response.ok) {
-          setAlbum(data.album);
-        }
-      } catch (error) {
-        console.error("Error fetching album:", error);
-      } finally {
-        setLoading(false);
-      }
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const album = await fetchAlbum(id);
+  
+  if (!album) {
+    return {
+      title: 'Album Not Found',
     };
+  }
 
-    if (params.id) {
-      fetchAlbum();
-    }
-  }, [params.id]);
+  return {
+    title: `${album.title} by ${album.artist.name} - Review`,
+    description: `${album.reviewSnippet} Read our full review of ${album.title} by ${album.artist.name}. Score: ${album.score}/10`,
+    keywords: `${album.artist.name}, ${album.title}, album review, music review, ${album.genres.map(g => g.genre.name).join(', ')}`,
+    openGraph: {
+      title: `${album.title} by ${album.artist.name} - Review`,
+      description: album.reviewSnippet,
+      images: [album.albumThumbnail],
+      type: 'article',
+    },
+  };
+}
 
-  if (loading) return <div className="loader"></div>;
+async function Reviews({ params }) {
+  const { id } = await params;
+  const album = await fetchAlbum(id);
+
   if (!album) return <div>Album not found</div>;
 
   return (
-    <>
-      <section className="reviews-page-container">
+    <section className="reviews-page-container">
         <Header />
 
         <div className="reviews-page-body">
@@ -80,8 +85,7 @@ function Reviews() {
             <p className="reviews-page-review-text">{album.albumReview}</p>
           </div>
         </div>
-      </section>
-    </>
+    </section>
   );
 }
 
